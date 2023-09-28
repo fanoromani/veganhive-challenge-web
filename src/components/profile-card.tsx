@@ -21,7 +21,7 @@ import { Textarea } from "./ui/textarea";
 
 export function ProfileCard() {
   return (
-    <Card className="min-w-3xl bg-gradient-to-b from-orange-300 to-yellow-200 border-none rounded-none md:rounded-xl">
+    <Card className="min-w-3xl bg-gradient-to-b from-orange-300 to-yellow-200 border-none rounded-none md:rounded-xl drop-shadow-xl">
       <CardHeader>
         <CardTitle className="flex items-center gap-4 text-3xl">
           <Avatar className="h-32 w-32 border-4 border-white drop-shadow-2xl">

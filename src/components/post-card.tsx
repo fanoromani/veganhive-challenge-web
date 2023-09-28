@@ -56,7 +56,7 @@ export function PostCard() {
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Like this Buzz</p>
+                <p>Like</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -71,7 +71,7 @@ export function PostCard() {
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Add a comment</p>
+                <p>Comment</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
