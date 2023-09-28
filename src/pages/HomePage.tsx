@@ -1,4 +1,4 @@
-import { PostCard } from "@/components/post-card";
+import { BuzzCard } from "@/components/buzz-card";
 import { ProfileCard } from "@/components/profile-card";
 
 export function HomePage() {
@@ -7,11 +7,11 @@ export function HomePage() {
       <div className="space-y-4 flex flex-col items-center md:mt-32">
         <ProfileCard />
         <div>
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
+          <BuzzCard />
+          <BuzzCard />
+          <BuzzCard />
+          <BuzzCard />
+          <BuzzCard />
         </div>
       </div>
     </div>

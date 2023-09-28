@@ -1,4 +1,4 @@
-import { Forward, Heart, MessageCircle } from "lucide-react";
+import { Forward, Heart } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   Card,
@@ -15,14 +15,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
-import { NavLink } from "react-router-dom";
+import { Label } from "./ui/label";
 
-export function PostCard() {
+export function BuzzPageCard() {
   return (
     <Card className="max-w-3xl rounded-none">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Avatar>
+          <Avatar className="h-32 w-32 border-4 border-white drop-shadow-2xl">
             <AvatarImage
               src="https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
               alt="Vegan Bee"
@@ -45,7 +45,7 @@ export function PostCard() {
         </p>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -61,23 +61,7 @@ export function PostCard() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <NavLink to="/post" title="Post">
-                  <Button
-                    variant={"ghost"}
-                    className="hover:bg-primary hover:text-white p-0 rounded-full aspect-square"
-                  >
-                    <MessageCircle />
-                  </Button>
-                </NavLink>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Comment</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -94,18 +78,10 @@ export function PostCard() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div>
-          <Button variant={"ghost"} className="p-1">
-            5 Likes
-          </Button>
-          <NavLink to="/post" title="Post">
-            <Button variant={"ghost"} className="p-1">
-              3 Comments
-            </Button>
-          </NavLink>
-          <Button variant={"ghost"} className="p-1">
-            2 Shares
-          </Button>
+        <div className="space-x-2">
+          <Label>4 Comments</Label>
+          <Label>5 Likes</Label>
+          <Label>2 Shares</Label>
         </div>
       </CardFooter>
     </Card>
