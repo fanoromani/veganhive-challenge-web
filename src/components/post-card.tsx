@@ -15,6 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { NavLink } from "react-router-dom";
 
 export function PostCard() {
   return (
@@ -63,12 +64,14 @@ export function PostCard() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  variant={"ghost"}
-                  className="hover:bg-primary hover:text-white p-0 rounded-full aspect-square"
-                >
-                  <MessageCircle />
-                </Button>
+                <NavLink to="/post" title="Post">
+                  <Button
+                    variant={"ghost"}
+                    className="hover:bg-primary hover:text-white p-0 rounded-full aspect-square"
+                  >
+                    <MessageCircle />
+                  </Button>
+                </NavLink>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Comment</p>
@@ -95,9 +98,11 @@ export function PostCard() {
           <Button variant={"ghost"} className="p-1">
             5 Likes
           </Button>
-          <Button variant={"ghost"} className="p-1">
-            3 Comments
-          </Button>
+          <NavLink to="/post" title="Post">
+            <Button variant={"ghost"} className="p-1">
+              3 Comments
+            </Button>
+          </NavLink>
           <Button variant={"ghost"} className="p-1">
             2 Shares
           </Button>
