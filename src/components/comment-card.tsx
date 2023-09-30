@@ -16,33 +16,25 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { Label } from "./ui/label";
+import { Comment } from "@/lib/types";
 
-export function CommentCard() {
+export function CommentCard({ author, body, likes, createdAt }: Comment) {
   return (
     <Card className="w-full rounded-none">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage
-                src="https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
-                alt="Vegan Bee"
-              />
+              <AvatarImage src={author.avatar} alt="Vegan Bee" />
               <AvatarFallback>VB</AvatarFallback>
             </Avatar>
-            Random Bee
+            {author.name}
           </div>
-          <CardDescription>08 Aug</CardDescription>
+          <CardDescription>{createdAt}</CardDescription>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p>
-          Vivamus dapibus pulvinar turpis vitae molestie. Quisque at blandit
-          magna, posuere venenatis ligula. Sed ac turpis vel est aliquet
-          aliquet. Nullam pretium nulla nunc, nec mattis nunc porttitor et. Ut
-          in libero convallis augue luctus dignissim vitae sodales quam.
-          Suspendisse potenti.
-        </p>
+        <p>{body}</p>
       </CardContent>
       <CardFooter className="space-x-2">
         <TooltipProvider>
@@ -60,7 +52,7 @@ export function CommentCard() {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <Label>5 Likes</Label>
+        <Label>{likes} Likes</Label>
       </CardFooter>
     </Card>
   );

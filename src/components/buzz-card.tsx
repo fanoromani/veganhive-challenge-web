@@ -28,7 +28,7 @@ export function BuzzCard({
   comments,
 }: Buzz) {
   return (
-    <Card className="md:w-2/3 w-full rounded-none">
+    <Card className="md:w-2/3 max-w-2xl rounded-none">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Avatar>

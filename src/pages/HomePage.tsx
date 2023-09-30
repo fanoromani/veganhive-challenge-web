@@ -20,7 +20,7 @@ export function HomePage() {
     <div className="w-full min-h-screen flex flex-col bg-gradient-to-b from-orange-100 to-yellow-100">
       <div className="space-y-4 flex flex-col items-center md:mt-32">
         <ProfileCard />
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-2/3">
           {buzzes &&
             buzzes.map((buzz) => {
               return (
