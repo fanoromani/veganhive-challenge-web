@@ -16,33 +16,33 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { NavLink } from "react-router-dom";
+import { Buzz } from "@/lib/types";
 
-export function BuzzCard() {
+export function BuzzCard({
+  createdAt,
+  body,
+  author,
+  likes,
+  shares,
+  id,
+  comments,
+}: Buzz) {
   return (
-    <Card className="max-w-3xl rounded-none">
+    <Card className="md:w-2/3 w-full rounded-none">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Avatar>
-            <AvatarImage
-              src="https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
-              alt="Vegan Bee"
-            />
+            <AvatarImage src={author.avatar} alt="Vegan Bee" />
             <AvatarFallback>VB</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            Vegan Bee
-            <CardDescription>08 Aug</CardDescription>
+            {author.name}
+            <CardDescription>{createdAt}</CardDescription>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p>
-          Vivamus dapibus pulvinar turpis vitae molestie. Quisque at blandit
-          magna, posuere venenatis ligula. Sed ac turpis vel est aliquet
-          aliquet. Nullam pretium nulla nunc, nec mattis nunc porttitor et. Ut
-          in libero convallis augue luctus dignissim vitae sodales quam.
-          Suspendisse potenti.
-        </p>
+        <p>{body}</p>
       </CardContent>
       <CardFooter className="flex justify-between">
         <div className="flex gap-2">
@@ -64,7 +64,7 @@ export function BuzzCard() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <NavLink to="/buzz" title="Buzz">
+                <NavLink to={`/buzz/${id}`} title="Buzz">
                   <Button
                     variant={"ghost"}
                     className="hover:bg-primary hover:text-white p-0 rounded-full aspect-square"
@@ -96,15 +96,15 @@ export function BuzzCard() {
         </div>
         <div>
           <Button variant={"ghost"} className="p-1">
-            5 Likes
+            {likes} Likes
           </Button>
-          <NavLink to="/buzz" title="Buzz">
+          <NavLink to={`/buzz/${id}`} title="Buzz">
             <Button variant={"ghost"} className="p-1">
-              3 Comments
+              {comments.length} Comments
             </Button>
           </NavLink>
           <Button variant={"ghost"} className="p-1">
-            2 Shares
+            {shares} Shares
           </Button>
         </div>
       </CardFooter>

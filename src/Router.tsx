@@ -6,7 +6,7 @@ export function Router() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/buzz/" element={<BuzzPage />} />
+      <Route path="/buzz/:id" element={<BuzzPage />} />
     </Routes>
   );
 }

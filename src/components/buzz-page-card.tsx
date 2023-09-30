@@ -16,8 +16,16 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { Label } from "./ui/label";
+import { Buzz } from "@/lib/types";
 
-export function BuzzPageCard() {
+export function BuzzPageCard({
+  body,
+  author,
+  createdAt,
+  likes,
+  shares,
+  comments,
+}: Buzz) {
   return (
     <Card className="max-w-3xl rounded-none">
       <CardHeader>
@@ -30,19 +38,13 @@ export function BuzzPageCard() {
             <AvatarFallback>VB</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            Vegan Bee
-            <CardDescription>08 Aug</CardDescription>
+            {author.name}
+            <CardDescription>{createdAt}</CardDescription>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p>
-          Vivamus dapibus pulvinar turpis vitae molestie. Quisque at blandit
-          magna, posuere venenatis ligula. Sed ac turpis vel est aliquet
-          aliquet. Nullam pretium nulla nunc, nec mattis nunc porttitor et. Ut
-          in libero convallis augue luctus dignissim vitae sodales quam.
-          Suspendisse potenti.
-        </p>
+        <p>{body}</p>
       </CardContent>
       <CardFooter className="flex justify-between">
         <div className="flex gap-2 items-center">
@@ -79,9 +81,9 @@ export function BuzzPageCard() {
           </TooltipProvider>
         </div>
         <div className="space-x-2">
-          <Label>4 Comments</Label>
-          <Label>5 Likes</Label>
-          <Label>2 Shares</Label>
+          <Label>{comments.length} Comments</Label>
+          <Label>{likes} Likes</Label>
+          <Label>{shares} Shares</Label>
         </div>
       </CardFooter>
     </Card>

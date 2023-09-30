@@ -3,9 +3,25 @@ import { BuzzPageCard } from "@/components/buzz-page-card";
 import { CommentCard } from "@/components/comment-card";
 import { ArrowBigLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { api } from "@/lib/axios";
+import { useCallback, useEffect, useState } from "react";
+import { Buzz } from "@/lib/types";
 
 export function BuzzPage() {
+  const { id } = useParams();
+  console.log(id);
+  const [buzz, setBuzz] = useState<Buzz | null>(null);
+
+  const fetchBuzz = useCallback(async () => {
+    const response = await api.get(`/buzz/${id}`);
+    setBuzz(response.data);
+  }, [id]);
+
+  useEffect(() => {
+    fetchBuzz();
+  }, [fetchBuzz]);
+
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-gradient-to-b from-orange-100 to-yellow-100">
       <div className="max-w-3xl flex flex-col md:mt-32">
@@ -14,7 +30,17 @@ export function BuzzPage() {
             <ArrowBigLeft />
           </Button>
         </NavLink>
-        <BuzzPageCard />
+        {buzz && (
+          <BuzzPageCard
+            id={id}
+            author={buzz.author}
+            comments={buzz.comments}
+            createdAt={buzz.createdAt}
+            body={buzz?.body}
+            likes={buzz?.likes}
+            shares={buzz?.shares}
+          />
+        )}
         <WriteCommentCard />
         <CommentCard />
         <CommentCard />
