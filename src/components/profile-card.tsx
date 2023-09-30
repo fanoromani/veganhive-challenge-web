@@ -9,8 +9,12 @@ import {
   CardTitle,
 } from "./ui/card";
 import { NewBuzzButton } from "./new-buzz-button";
+import { Buzz } from "@/lib/types";
 
-export function ProfileCard() {
+interface ProfileCardProps {
+  setBuzzesCallback: (data: Buzz) => void;
+}
+export function ProfileCard({ setBuzzesCallback }: ProfileCardProps) {
   return (
     <Card className="max-w-3xl bg-gradient-to-b from-orange-300 to-yellow-200 border-none rounded-none md:rounded-xl drop-shadow-xl">
       <CardHeader>
@@ -46,7 +50,7 @@ export function ProfileCard() {
             3 Following
           </Button>
         </div>
-        <NewBuzzButton />
+        <NewBuzzButton setBuzzesCallback={setBuzzesCallback} />
       </CardFooter>
     </Card>
   );

@@ -10,7 +10,6 @@ import { CommentCard } from "@/components/comment-card";
 
 export function BuzzPage() {
   const { id } = useParams();
-  console.log(id);
   const [buzz, setBuzz] = useState<Buzz | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
 

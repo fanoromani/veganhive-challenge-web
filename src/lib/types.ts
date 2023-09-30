@@ -16,6 +16,12 @@ export interface Comment {
 }
 
 export interface Author {
+  id?: string;
   name: string;
   avatar: string;
+}
+
+export interface User {
+  username: string;
+  password: string;
 }
