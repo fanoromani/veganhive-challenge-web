@@ -16,14 +16,19 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { NavLink } from "react-router-dom";
-import { Buzz, Token } from "@/lib/types";
-import { useCallback, useEffect } from "react";
+import { Buzz } from "@/lib/types";
 import { api } from "@/lib/axios";
-import jwt_decode from "jwt-decode";
+import { useMutation } from "react-query";
+import { queryClient } from "@/lib/queryClient";
+import { toast } from "react-toastify";
+import { useUserStore } from "@/lib/userStore";
 
-interface BuzzCardProps extends Buzz {
-  setBuzzesCallback: (data: Buzz) => void;
+// eslint-disable-next-line react-refresh/only-export-components
+export async function likeBuzz(id: string) {
+  const response = await api.post(`/buzz/${id}/like`);
+  return response.data;
 }
+
 export function BuzzCard({
   createdAt,
   body,
@@ -32,29 +37,23 @@ export function BuzzCard({
   shares,
   id,
   comments,
-  setBuzzesCallback,
-}: BuzzCardProps) {
-  const likeBuzz = useCallback(async () => {
-    const token = localStorage.getItem("User-Token");
-    if (token) {
-      const decodedToken: Token = jwt_decode(token);
-      if (decodedToken) {
-        const userId = decodedToken.userId;
-        console.log(userId);
-        console.log(id);
-        const response = await api.post(`/buzz/6519155269318e744271bed0/like`, {
-          body: "6518d582d1e9302e560dc556",
-        });
-        setBuzzesCallback(response.data);
-      }
-    }
-  }, [id, setBuzzesCallback]);
+  whoLiked,
+}: Buzz) {
+  const user = useUserStore((state) => state.user);
 
-  useEffect(() => {
-    likeBuzz;
-  }, [likeBuzz]);
+  const mutation = useMutation(likeBuzz, {
+    onSuccess: () => {
+      toast.success("Buzz liked! 🐝");
+      queryClient.invalidateQueries("buzzes");
+    },
+  });
+
+  const hasLiked = whoLiked.find(
+    (usersWhoLiked) => usersWhoLiked.userId === user?.id
+  );
+
   return (
-    <Card className="md:w-2/3 max-w-2xl rounded-none">
+    <Card className="w-full rounded-none md:rounded-lg">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Avatar>
@@ -76,11 +75,11 @@ export function BuzzCard({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  onClick={likeBuzz}
+                  onClick={() => mutation.mutate(id as string)}
                   variant={"ghost"}
                   className="hover:bg-red-500 hover:text-white p-0 rounded-full aspect-square"
                 >
-                  <Heart />
+                  <Heart fill={hasLiked ? "red" : "white"} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>

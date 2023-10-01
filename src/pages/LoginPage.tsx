@@ -75,7 +75,7 @@ export function LoginPage() {
             {user?.username !== undefined && (
               <>
                 <p>Success</p>
-                <NavLink className="w-full" to={`/${user.username}`}>
+                <NavLink className="w-full" to={`/${user?.username}`}>
                   <Button className="w-full" variant={"default"}>
                     Start
                   </Button>

@@ -16,51 +16,48 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { Label } from "./ui/label";
-import { Comment, Token } from "@/lib/types";
-import { useCallback, useEffect } from "react";
+import { Comment } from "@/lib/types";
 import { api } from "@/lib/axios";
-import jwt_decode from "jwt-decode";
+import { useMutation } from "react-query";
+import { queryClient } from "@/lib/queryClient";
+import { useUserStore } from "@/lib/userStore";
 
-interface CommentCardProps extends Comment {
-  setCommentsCallback: (data: Comment) => void;
+async function likeComment(id: string) {
+  const response = await api.post(`/comment/${id}/like`);
+  return response.data;
 }
+
 export function CommentCard({
   author,
   body,
   likes,
   createdAt,
   id,
-  setCommentsCallback,
-}: CommentCardProps) {
-  const likeComment = useCallback(async () => {
-    const token = localStorage.getItem("User-Token");
-    if (token) {
-      const decodedToken: Token = jwt_decode(token);
-      if (decodedToken) {
-        const userId = decodedToken.userId;
-        console.log(id);
-        console.log(userId);
-        const response = await api.post(`/comment/${id}/like`, {
-          body: userId,
-        });
-        setCommentsCallback(response.data);
-      }
-    }
-  }, [id, setCommentsCallback]);
+  buzzId,
+  whoLiked,
+}: Comment) {
+  const user = useUserStore((state) => state.user);
 
-  useEffect(() => {
-    likeComment;
-  }, [likeComment]);
+  const mutation = useMutation(likeComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(`comments-${buzzId}`);
+    },
+  });
+
+  const hasLiked = whoLiked?.find(
+    (usersWhoLiked) => usersWhoLiked.userId === user?.id
+  );
+
   return (
     <Card className="w-full rounded-none">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={author.avatar} alt="Vegan Bee" />
+              <AvatarImage src={author?.avatar} alt="Vegan Bee" />
               <AvatarFallback>VB</AvatarFallback>
             </Avatar>
-            {author.username}
+            {author?.username}
           </div>
           <CardDescription>{createdAt}</CardDescription>
         </CardTitle>
@@ -73,11 +70,11 @@ export function CommentCard({
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                onClick={likeComment}
+                onClick={() => mutation.mutate(id as string)}
                 variant={"ghost"}
                 className="hover:bg-red-500 hover:text-white p-0 rounded-full aspect-square"
               >
-                <Heart />
+                <Heart fill={hasLiked ? "red" : "white"} />
               </Button>
             </TooltipTrigger>
             <TooltipContent>

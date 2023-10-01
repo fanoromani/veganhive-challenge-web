@@ -2,46 +2,50 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { api } from "@/lib/axios";
-import { Comment, Token } from "@/lib/types";
 import { useCallback } from "react";
-import jwt_decode from "jwt-decode";
-
-const newCommentFormSchema = z.object({
-  body: z.string(),
-});
-type NewCommentFormInputs = z.infer<typeof newCommentFormSchema>;
+import { useMutation } from "react-query";
+import { toast } from "react-toastify";
+import { queryClient } from "@/lib/queryClient";
 
 interface WriteCommentCardProps {
-  setCommentsCallback: (data: Comment) => void;
   buzzId: string | undefined;
 }
+interface CommentBuzz {
+  body: string;
+  buzzId: string;
+}
+async function commentBuzz({ body, buzzId }: CommentBuzz) {
+  const response = await api.post(`/comment/${buzzId}`, {
+    body: body,
+  });
+  return response.data;
+}
 
-export function WriteCommentCard({
-  setCommentsCallback,
-  buzzId,
-}: WriteCommentCardProps) {
-  const { register, handleSubmit } = useForm<NewCommentFormInputs>();
+interface NewCommentFormSchema {
+  body: string;
+}
+
+export function WriteCommentCard({ buzzId }: WriteCommentCardProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewCommentFormSchema>();
+
+  const mutation = useMutation(commentBuzz, {
+    onSuccess: () => {
+      toast.success("Great comment! 🐝");
+      queryClient.invalidateQueries(`comments-${buzzId}`);
+    },
+  });
 
   const handleCreateNewComment = useCallback(
-    async (data: NewCommentFormInputs) => {
-      const { body } = data;
-      const token = localStorage.getItem("User-Token");
-      if (token) {
-        const decodedToken: Token = jwt_decode(token);
-        if (decodedToken) {
-          const userId = decodedToken.userId;
-          const response = await api.post(`/comment/${userId}/${buzzId}`, {
-            body: body,
-          });
-          console.log(userId);
-          setCommentsCallback(response.data);
-        }
-      }
+    async (data: NewCommentFormSchema) => {
+      mutation.mutate({ body: data.body, buzzId: buzzId as string });
     },
-    [setCommentsCallback, buzzId]
+    [mutation, buzzId]
   );
 
   return (
@@ -55,7 +59,13 @@ export function WriteCommentCard({
             />
             <AvatarFallback>VB</AvatarFallback>
           </Avatar>
-          <Textarea placeholder="Write a comment..." {...register("body")} />
+          <Textarea
+            placeholder="Write a comment..."
+            {...register("body", { required: true })}
+          />
+          {errors.body && errors.body.type === "required" && (
+            <p className="text-red-700">Required</p>
+          )}
         </CardContent>
         <CardFooter className="flex flex-row-reverse">
           <Button type="submit" variant={"default"}>

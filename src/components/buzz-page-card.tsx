@@ -17,15 +17,38 @@ import {
 } from "./ui/tooltip";
 import { Label } from "./ui/label";
 import { Buzz } from "@/lib/types";
+import { useUserStore } from "@/lib/userStore";
+import { useMutation } from "react-query";
+import { likeBuzz } from "./buzz-card";
+import { toast } from "react-toastify";
+import { queryClient } from "@/lib/queryClient";
 
 export function BuzzPageCard({
+  id,
   body,
   author,
   createdAt,
   likes,
   shares,
   comments,
+  whoLiked,
 }: Buzz) {
+  console.log(whoLiked);
+  const user = useUserStore((state) => state.user);
+
+  const hasLiked = whoLiked?.find(
+    (usersWhoLiked) => usersWhoLiked.userId === user?.id
+  );
+  console.log(user?.id);
+  console.log(hasLiked);
+
+  const mutation = useMutation(likeBuzz, {
+    onSuccess: () => {
+      toast.success("Buzz liked! 🐝");
+      queryClient.invalidateQueries(`buzz-${id}`);
+    },
+  });
+
   return (
     <Card className="max-w-3xl rounded-none">
       <CardHeader>
@@ -54,8 +77,9 @@ export function BuzzPageCard({
                 <Button
                   variant={"ghost"}
                   className="hover:bg-red-500 hover:text-white p-0 rounded-full aspect-square"
+                  onClick={() => mutation.mutate(id as string)}
                 >
-                  <Heart />
+                  <Heart fill={hasLiked ? "red" : "white"} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>

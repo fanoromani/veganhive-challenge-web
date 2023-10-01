@@ -4,36 +4,52 @@ import { ArrowBigLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink, useParams } from "react-router-dom";
 import { api } from "@/lib/axios";
-import { useCallback, useEffect, useState } from "react";
 import { Buzz, Comment } from "@/lib/types";
 import { CommentCard } from "@/components/comment-card";
+import { useQuery } from "react-query";
+import { useUserStore } from "@/lib/userStore";
+import { getUser } from "./HomePage";
+
+async function fetchBuzz(id: string) {
+  const response = await api.get(`/buzz/${id}`);
+  return response.data;
+}
+
+async function fetchComments(id: string) {
+  const response = await api.get(`/comments/${id}`);
+  return response.data;
+}
 
 export function BuzzPage() {
   const { id } = useParams();
-  const [buzz, setBuzz] = useState<Buzz | null>(null);
-  const [comments, setComments] = useState<Comment[]>([]);
 
-  const fetchComments = useCallback(async () => {
-    const response = await api.get(`/comments/${id}`);
-    setComments(response.data);
-  }, [id]);
+  const { isLoggedIn, setUser } = useUserStore((state) => ({
+    isLoggedIn: state.isLoggedIn,
+    setUser: state.setUser,
+  }));
 
-  useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
+  useQuery("user", getUser, {
+    enabled: isLoggedIn,
+    onSuccess: (data) => {
+      setUser(data);
+    },
+  });
 
-  const setCommentsCallback = (data: Comment) => {
-    setComments((state) => [...state, data]);
-  };
+  const { data: buzz } = useQuery<Buzz>(
+    `buzz-${id}`,
+    () => fetchBuzz(id as string),
+    {
+      enabled: !!id,
+    }
+  );
 
-  const fetchBuzz = useCallback(async () => {
-    const response = await api.get(`/buzz/${id}`);
-    setBuzz(response.data);
-  }, [id]);
-
-  useEffect(() => {
-    fetchBuzz();
-  }, [fetchBuzz]);
+  const { data: comments } = useQuery<Comment[]>(
+    `comments-${id}`,
+    () => fetchComments(id as string),
+    {
+      enabled: !!id,
+    }
+  );
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-gradient-to-b from-orange-100 to-yellow-100">
@@ -52,22 +68,22 @@ export function BuzzPage() {
             body={buzz?.body}
             likes={buzz?.likes}
             shares={buzz?.shares}
+            whoLiked={buzz.whoLiked}
           />
         )}
-        <WriteCommentCard
-          setCommentsCallback={setCommentsCallback}
-          buzzId={id}
-        />
+        <WriteCommentCard buzzId={id} />
+
         {comments &&
           comments.map((comment) => (
             <CommentCard
-              setCommentsCallback={setCommentsCallback}
               key={comment.id}
               id={comment.id}
               author={comment.author}
               body={comment.body}
               createdAt={comment.createdAt}
               likes={comment.likes}
+              buzzId={id as string}
+              whoLiked={comment.whoLiked}
             />
           ))}
       </div>

@@ -6,13 +6,16 @@ export interface Buzz {
   likes: number;
   shares: number;
   comments: Comment[];
+  whoLiked: { userId: string }[];
 }
 export interface Comment {
-  id?: string;
+  id: string;
   body: string;
   createdAt: string;
   likes: number;
   author: Author;
+  buzzId: string;
+  whoLiked: { userId: string }[];
 }
 
 export interface Author {
@@ -23,7 +26,7 @@ export interface Author {
 
 export interface User {
   username: string;
-  password: string;
+  id: string;
 }
 
 export interface Token {

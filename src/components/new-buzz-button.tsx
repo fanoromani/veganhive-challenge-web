@@ -9,42 +9,52 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { api } from "@/lib/axios";
-import { Buzz } from "@/lib/types";
+import { useMutation } from "react-query";
+import { toast } from "react-toastify";
+import { queryClient } from "@/lib/queryClient";
 
-const newBuzzFormSchema = z.object({
-  body: z.string(),
-});
-
-type NewBuzzFormInputs = z.infer<typeof newBuzzFormSchema>;
-
-interface NewBuzzButtonProps {
-  setBuzzesCallback: (data: Buzz) => void;
-  username: string | undefined;
+interface NewBuzzFormSchema {
+  body: string;
 }
 
-export function NewBuzzButton({
-  setBuzzesCallback,
-  username,
-}: NewBuzzButtonProps) {
-  const { register, handleSubmit } = useForm<NewBuzzFormInputs>();
+async function createBuzz(data: NewBuzzFormSchema) {
+  const { body } = data;
+  const response = await api.post(`/buzz`, {
+    body: body,
+  });
+
+  return response.data;
+}
+
+export function NewBuzzButton() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewBuzzFormSchema>();
+
+  const mutation = useMutation(createBuzz, {
+    onSuccess: () => {
+      toast.success("Nice buzz! 🐝");
+      setIsDialogOpen(false);
+      queryClient.invalidateQueries("buzzes");
+    },
+  });
 
   const handleCreateNewBuzz = useCallback(
-    async (data: NewBuzzFormInputs) => {
-      const { body } = data;
-      const response = await api.post(`/buzz/${username}`, {
-        body: body,
-      });
-      setBuzzesCallback(response.data);
+    async (data: NewBuzzFormSchema) => {
+      mutation.mutate(data);
     },
-    [setBuzzesCallback, username]
+    [mutation]
   );
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button variant={"default"}>New Buzz</Button>
       </DialogTrigger>
@@ -58,8 +68,11 @@ export function NewBuzzButton({
         <form onSubmit={handleSubmit(handleCreateNewBuzz)}>
           <Textarea
             placeholder="Whats happening in your hive?"
-            {...register("body")}
+            {...register("body", { required: true })}
           />
+          {errors.body && errors.body.type === "required" && (
+            <p className="text-red-700">Required</p>
+          )}
 
           <DialogFooter className="mt-2">
             <Button type="submit">Buzz</Button>
