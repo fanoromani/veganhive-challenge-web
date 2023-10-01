@@ -38,7 +38,7 @@ export function BuzzPageCard({
             <AvatarFallback>VB</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            {author.name}
+            {author.username}
             <CardDescription>{createdAt}</CardDescription>
           </div>
         </CardTitle>

@@ -16,9 +16,6 @@ import { api } from "@/lib/axios";
 import { Buzz } from "@/lib/types";
 
 const newBuzzFormSchema = z.object({
-  author: z.object({
-    id: z.string(),
-  }),
   body: z.string(),
 });
 
@@ -26,20 +23,24 @@ type NewBuzzFormInputs = z.infer<typeof newBuzzFormSchema>;
 
 interface NewBuzzButtonProps {
   setBuzzesCallback: (data: Buzz) => void;
+  username: string | undefined;
 }
 
-export function NewBuzzButton({ setBuzzesCallback }: NewBuzzButtonProps) {
+export function NewBuzzButton({
+  setBuzzesCallback,
+  username,
+}: NewBuzzButtonProps) {
   const { register, handleSubmit } = useForm<NewBuzzFormInputs>();
 
   const handleCreateNewBuzz = useCallback(
     async (data: NewBuzzFormInputs) => {
-      const { author, body } = data;
-      const response = await api.post(`/buzz/${author.id}`, {
+      const { body } = data;
+      const response = await api.post(`/buzz/${username}`, {
         body: body,
       });
       setBuzzesCallback(response.data);
     },
-    [setBuzzesCallback]
+    [setBuzzesCallback, username]
   );
 
   return (

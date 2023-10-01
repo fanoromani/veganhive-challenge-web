@@ -16,8 +16,14 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { NavLink } from "react-router-dom";
-import { Buzz } from "@/lib/types";
+import { Buzz, Token } from "@/lib/types";
+import { useCallback, useEffect } from "react";
+import { api } from "@/lib/axios";
+import jwt_decode from "jwt-decode";
 
+interface BuzzCardProps extends Buzz {
+  setBuzzesCallback: (data: Buzz) => void;
+}
 export function BuzzCard({
   createdAt,
   body,
@@ -26,7 +32,27 @@ export function BuzzCard({
   shares,
   id,
   comments,
-}: Buzz) {
+  setBuzzesCallback,
+}: BuzzCardProps) {
+  const likeBuzz = useCallback(async () => {
+    const token = localStorage.getItem("User-Token");
+    if (token) {
+      const decodedToken: Token = jwt_decode(token);
+      if (decodedToken) {
+        const userId = decodedToken.userId;
+        console.log(userId);
+        console.log(id);
+        const response = await api.post(`/buzz/6519155269318e744271bed0/like`, {
+          body: "6518d582d1e9302e560dc556",
+        });
+        setBuzzesCallback(response.data);
+      }
+    }
+  }, [id, setBuzzesCallback]);
+
+  useEffect(() => {
+    likeBuzz;
+  }, [likeBuzz]);
   return (
     <Card className="md:w-2/3 max-w-2xl rounded-none">
       <CardHeader>
@@ -36,7 +62,7 @@ export function BuzzCard({
             <AvatarFallback>VB</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            {author.name}
+            {author.username}
             <CardDescription>{createdAt}</CardDescription>
           </div>
         </CardTitle>
@@ -50,6 +76,7 @@ export function BuzzCard({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  onClick={likeBuzz}
                   variant={"ghost"}
                   className="hover:bg-red-500 hover:text-white p-0 rounded-full aspect-square"
                 >

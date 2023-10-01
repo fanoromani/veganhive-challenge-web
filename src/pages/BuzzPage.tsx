@@ -22,6 +22,10 @@ export function BuzzPage() {
     fetchComments();
   }, [fetchComments]);
 
+  const setCommentsCallback = (data: Comment) => {
+    setComments((state) => [...state, data]);
+  };
+
   const fetchBuzz = useCallback(async () => {
     const response = await api.get(`/buzz/${id}`);
     setBuzz(response.data);
@@ -50,11 +54,16 @@ export function BuzzPage() {
             shares={buzz?.shares}
           />
         )}
-        <WriteCommentCard />
+        <WriteCommentCard
+          setCommentsCallback={setCommentsCallback}
+          buzzId={id}
+        />
         {comments &&
           comments.map((comment) => (
             <CommentCard
+              setCommentsCallback={setCommentsCallback}
               key={comment.id}
+              id={comment.id}
               author={comment.author}
               body={comment.body}
               createdAt={comment.createdAt}

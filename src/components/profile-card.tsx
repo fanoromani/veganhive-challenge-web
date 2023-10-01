@@ -13,8 +13,9 @@ import { Buzz } from "@/lib/types";
 
 interface ProfileCardProps {
   setBuzzesCallback: (data: Buzz) => void;
+  username: string | undefined;
 }
-export function ProfileCard({ setBuzzesCallback }: ProfileCardProps) {
+export function ProfileCard({ setBuzzesCallback, username }: ProfileCardProps) {
   return (
     <Card className="max-w-3xl bg-gradient-to-b from-orange-300 to-yellow-200 border-none rounded-none md:rounded-xl drop-shadow-xl">
       <CardHeader>
@@ -27,7 +28,7 @@ export function ProfileCard({ setBuzzesCallback }: ProfileCardProps) {
             <AvatarFallback>VB</AvatarFallback>
           </Avatar>
           <div>
-            Vegan Bee
+            {username}
             <CardDescription>Worker Bee</CardDescription>
           </div>
         </CardTitle>
@@ -50,7 +51,10 @@ export function ProfileCard({ setBuzzesCallback }: ProfileCardProps) {
             3 Following
           </Button>
         </div>
-        <NewBuzzButton setBuzzesCallback={setBuzzesCallback} />
+        <NewBuzzButton
+          setBuzzesCallback={setBuzzesCallback}
+          username={username}
+        />
       </CardFooter>
     </Card>
   );

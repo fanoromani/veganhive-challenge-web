@@ -11,17 +11,22 @@ export interface Comment {
   id?: string;
   body: string;
   createdAt: string;
-  likes: string;
+  likes: number;
   author: Author;
 }
 
 export interface Author {
   id?: string;
-  name: string;
+  username: string;
   avatar: string;
 }
 
 export interface User {
   username: string;
   password: string;
+}
+
+export interface Token {
+  iat: number;
+  userId: string;
 }

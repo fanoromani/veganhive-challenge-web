@@ -33,7 +33,9 @@ export function LoginPage() {
         username: username,
         password: password,
       });
-      setUser(response.data);
+      const token = response.data.token;
+      localStorage.setItem("User-Token", token);
+      setUser(response.data.user);
     },
     [setUser, formType]
   );
@@ -51,8 +53,8 @@ export function LoginPage() {
             <Label>Password</Label>
             <Input type="password" {...register("password")} />
           </CardContent>
-          <CardFooter>
-            <NavLink to={`/${user?.username}`}>
+          <CardFooter className="flex flex-col">
+            <div className="space-x-2">
               <Button
                 onClick={() => setFormType("register")}
                 type="submit"
@@ -61,16 +63,25 @@ export function LoginPage() {
               >
                 Register
               </Button>
-            </NavLink>
-            <NavLink to={`/${user?.username}`}>
               <Button
                 onClick={() => setFormType("login")}
+                type="submit"
                 className="flex-1"
                 variant={"default"}
               >
                 Login
               </Button>
-            </NavLink>
+            </div>
+            {user?.username !== undefined && (
+              <>
+                <p>Success</p>
+                <NavLink className="w-full" to={`/${user.username}`}>
+                  <Button className="w-full" variant={"default"}>
+                    Start
+                  </Button>
+                </NavLink>
+              </>
+            )}
           </CardFooter>
         </form>
       </Card>

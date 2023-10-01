@@ -16,9 +16,41 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { Label } from "./ui/label";
-import { Comment } from "@/lib/types";
+import { Comment, Token } from "@/lib/types";
+import { useCallback, useEffect } from "react";
+import { api } from "@/lib/axios";
+import jwt_decode from "jwt-decode";
 
-export function CommentCard({ author, body, likes, createdAt }: Comment) {
+interface CommentCardProps extends Comment {
+  setCommentsCallback: (data: Comment) => void;
+}
+export function CommentCard({
+  author,
+  body,
+  likes,
+  createdAt,
+  id,
+  setCommentsCallback,
+}: CommentCardProps) {
+  const likeComment = useCallback(async () => {
+    const token = localStorage.getItem("User-Token");
+    if (token) {
+      const decodedToken: Token = jwt_decode(token);
+      if (decodedToken) {
+        const userId = decodedToken.userId;
+        console.log(id);
+        console.log(userId);
+        const response = await api.post(`/comment/${id}/like`, {
+          body: userId,
+        });
+        setCommentsCallback(response.data);
+      }
+    }
+  }, [id, setCommentsCallback]);
+
+  useEffect(() => {
+    likeComment;
+  }, [likeComment]);
   return (
     <Card className="w-full rounded-none">
       <CardHeader>
@@ -28,7 +60,7 @@ export function CommentCard({ author, body, likes, createdAt }: Comment) {
               <AvatarImage src={author.avatar} alt="Vegan Bee" />
               <AvatarFallback>VB</AvatarFallback>
             </Avatar>
-            {author.name}
+            {author.username}
           </div>
           <CardDescription>{createdAt}</CardDescription>
         </CardTitle>
@@ -41,6 +73,7 @@ export function CommentCard({ author, body, likes, createdAt }: Comment) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
+                onClick={likeComment}
                 variant={"ghost"}
                 className="hover:bg-red-500 hover:text-white p-0 rounded-full aspect-square"
               >
