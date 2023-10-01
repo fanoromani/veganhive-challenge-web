@@ -24,17 +24,18 @@ type LoginFormInputs = z.infer<typeof loginFormSchema>;
 export function LoginPage() {
   const [user, setUser] = useState<User | null>(null);
   const { register, handleSubmit } = useForm<LoginFormInputs>();
+  const [formType, setFormType] = useState<"register" | "login">("register");
 
   const handleLogin = useCallback(
     async (data: LoginFormInputs) => {
       const { username, password } = data;
-      const response = await api.post(`/`, {
+      const response = await api.post(`/${formType}`, {
         username: username,
         password: password,
       });
       setUser(response.data);
     },
-    [setUser]
+    [setUser, formType]
   );
 
   return (
@@ -51,15 +52,25 @@ export function LoginPage() {
             <Input type="password" {...register("password")} />
           </CardContent>
           <CardFooter>
-            {user ? (
-              <NavLink to="/home">
-                <Button className="flex-1">{user.username}</Button>
-              </NavLink>
-            ) : (
-              <Button className="flex-1" variant={"default"}>
+            <NavLink to={`/${user?.username}`}>
+              <Button
+                onClick={() => setFormType("register")}
+                type="submit"
+                className="flex-1"
+                variant={"default"}
+              >
+                Register
+              </Button>
+            </NavLink>
+            <NavLink to={`/${user?.username}`}>
+              <Button
+                onClick={() => setFormType("login")}
+                className="flex-1"
+                variant={"default"}
+              >
                 Login
               </Button>
-            )}
+            </NavLink>
           </CardFooter>
         </form>
       </Card>
