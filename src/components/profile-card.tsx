@@ -13,8 +13,16 @@ import { toast } from "react-toastify";
 
 interface ProfileCardProps {
   username: string | undefined;
+  avatar: string;
+  description: string;
+  buzzes: number;
 }
-export function ProfileCard({ username }: ProfileCardProps) {
+export function ProfileCard({
+  username,
+  avatar,
+  description,
+  buzzes,
+}: ProfileCardProps) {
   const setIsLoggedIn = useUserStore((state) => state.setIsLoggedIn);
 
   const onLogout = () => {
@@ -29,15 +37,21 @@ export function ProfileCard({ username }: ProfileCardProps) {
         <CardTitle className="flex items-center gap-4 text-3xl">
           <Avatar className="h-32 w-32 border-4 border-white drop-shadow-2xl">
             <AvatarImage
-              src="https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
+              src={
+                avatar
+                  ? avatar
+                  : "https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
+              }
               alt="Vegan Bee"
             />
-            <AvatarFallback>VB</AvatarFallback>
+            <AvatarFallback>
+              {username?.slice(0, 1).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
 
           <div>
             {username}
-            <CardDescription>Worker Bee</CardDescription>
+            <CardDescription>{description}</CardDescription>
           </div>
 
           <Button variant="destructive" onClick={onLogout}>
@@ -49,7 +63,7 @@ export function ProfileCard({ username }: ProfileCardProps) {
       <CardFooter className="flex justify-between">
         <div>
           <Button variant={"ghost"} className="p-1">
-            3 Buzzes
+            {buzzes} Buzzes
           </Button>
         </div>
 

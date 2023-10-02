@@ -22,6 +22,7 @@ import { useMutation } from "react-query";
 import { likeBuzz } from "./buzz-card";
 import { toast } from "react-toastify";
 import { queryClient } from "@/lib/queryClient";
+import { formatDate } from "@/lib/formatter";
 
 export function BuzzPageCard({
   id,
@@ -48,10 +49,10 @@ export function BuzzPageCard({
   });
 
   return (
-    <Card className="max-w-3xl rounded-none">
+    <Card className="w-full mb-4 border-none rounded-none md:rounded-xl drop-shadow-xl">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Avatar className="h-32 w-32 border-4 border-white drop-shadow-2xl">
+          <Avatar className="h-16 w-16 border-4 border-white drop-shadow-2xl">
             <AvatarImage
               src="https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
               alt="Vegan Bee"
@@ -60,7 +61,7 @@ export function BuzzPageCard({
           </Avatar>
           <div className="flex flex-col gap-1">
             {author.username}
-            <CardDescription>{createdAt}</CardDescription>
+            <CardDescription>{formatDate(createdAt)}</CardDescription>
           </div>
         </CardTitle>
       </CardHeader>

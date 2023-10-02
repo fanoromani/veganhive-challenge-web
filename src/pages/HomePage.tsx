@@ -35,7 +35,16 @@ export function HomePage() {
   return (
     <div className="w-full min-h-screen flex flex-col bg-gradient-to-b from-orange-100 to-yellow-100">
       <div className="md:container md:max-w-3xl w-full space-y-8 flex flex-col items-center md:mt-12">
-        {isLoggedIn ? <ProfileCard username={user?.username} /> : <LoginCard />}
+        {isLoggedIn ? (
+          <ProfileCard
+            description={user?.description}
+            avatar={user?.avatar}
+            username={user?.username}
+            buzzes={user?.buzzes}
+          />
+        ) : (
+          <LoginCard />
+        )}
 
         <div className="w-full flex flex-col items-center pb-20 md:gap-2">
           {buzzes &&

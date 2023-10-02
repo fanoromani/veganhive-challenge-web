@@ -21,6 +21,7 @@ import { api } from "@/lib/axios";
 import { useMutation } from "react-query";
 import { queryClient } from "@/lib/queryClient";
 import { useUserStore } from "@/lib/userStore";
+import { formatDate } from "@/lib/formatter";
 
 async function likeComment(id: string) {
   const response = await api.post(`/comment/${id}/like`);
@@ -55,11 +56,13 @@ export function CommentCard({
           <div className="flex items-center gap-2">
             <Avatar>
               <AvatarImage src={author?.avatar} alt="Vegan Bee" />
-              <AvatarFallback>VB</AvatarFallback>
+              <AvatarFallback>
+                {author?.username.slice(0, 1).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
             {author?.username}
           </div>
-          <CardDescription>{createdAt}</CardDescription>
+          <CardDescription>{formatDate(createdAt)}</CardDescription>
         </CardTitle>
       </CardHeader>
       <CardContent>

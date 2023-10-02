@@ -22,6 +22,7 @@ import { useMutation } from "react-query";
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "react-toastify";
 import { useUserStore } from "@/lib/userStore";
+import { formatDate } from "@/lib/formatter";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function likeBuzz(id: string) {
@@ -58,11 +59,13 @@ export function BuzzCard({
         <CardTitle className="flex items-center gap-2">
           <Avatar>
             <AvatarImage src={author.avatar} alt="Vegan Bee" />
-            <AvatarFallback>VB</AvatarFallback>
+            <AvatarFallback>
+              {author?.username.slice(0, 1).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
             {author.username}
-            <CardDescription>{createdAt}</CardDescription>
+            <CardDescription>{formatDate(createdAt)}</CardDescription>
           </div>
         </CardTitle>
       </CardHeader>

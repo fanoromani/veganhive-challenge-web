@@ -53,7 +53,7 @@ export function BuzzPage() {
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-gradient-to-b from-orange-100 to-yellow-100">
-      <div className="max-w-3xl flex flex-col md:mt-32">
+      <div className="md:container md:max-w-3xl w-full flex flex-col md:mt-32">
         <NavLink to="/" title="Home">
           <Button>
             <ArrowBigLeft />
