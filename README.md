@@ -2,7 +2,7 @@
 
 VeganHive Timeline Web is a web application that provides a timeline view of events and activities related to the VeganHive project. This project is designed to simulate a social timeline in which users can interact through making posts and like and commenting on each other's posts.
 
-This project was bootstrapped with [ViteJs](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [ViteJs](https://vitejs.dev/).
 
 API repo: [https://github.com/fanoromani/veganhive-timeline-server](https://github.com/fanoromani/veganhive-timeline-server)
 
