@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const api = axios.create({
-  baseURL: process.env.VITE_BACKEND_URL || "http://localhost:3333",
+  baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:1000",
 });
 
 api.interceptors.request.use(
