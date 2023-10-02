@@ -39,8 +39,6 @@ export function BuzzPageCard({
   const hasLiked = whoLiked?.find(
     (usersWhoLiked) => usersWhoLiked.userId === user?.id
   );
-  console.log(user?.id);
-  console.log(hasLiked);
 
   const mutation = useMutation(likeBuzz, {
     onSuccess: () => {
