@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
@@ -9,9 +10,11 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({
+  // @ts-expect-error
   className,
   ...props
 }: DialogPrimitive.DialogPortalProps) => (
+  // @ts-expect-error
   <DialogPrimitive.Portal className={cn(className)} {...props} />
 );
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;

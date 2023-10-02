@@ -72,7 +72,7 @@ export function LoginForm({ setFormType, setDialogOpen }: LoginFormProps) {
         <Button
           type="button"
           variant="ghost"
-          onClick={() => setFormType("login")}
+          onClick={() => setFormType("register")}
         >
           Don't have an account? Click to register.
         </Button>
