@@ -31,7 +31,7 @@ You can see a live demo of VeganHive Timeline Web at [veganhive-timeline.netlify
 - UI: [React](https://reactjs.org/)
 - State Control: [Zustand](https://github.com/pmndrs/zustand) for global state
 - Styling: [Tailwindcss](https://tailwindcss.com/) and [Shadcn-ui](https://ui.shadcn.com/) powered by [Radixui](https://www.radix-ui.com/)
-- HTTP Client: [Axios](https://github.com/axios/axios)
+- HTTP Client: [Axios](https://github.com/axios/axios) and [React Query](https://tanstack.com/query/v3/)
 - Icons: [lucide-react](https://lucide.dev/guide/packages/lucide-react)
 - Form Control: [React Hook Form](https://react-hook-form.com/)
 - [Typescript](https://www.typescriptlang.org/)
@@ -57,13 +57,6 @@ You can see a live demo of VeganHive Timeline Web at [veganhive-timeline.netlify
 - **Database Storage**: Stores data efficiently in a database for quick retrieval.
 
 ## Getting Started
-
-### Prerequisites
-
-Before you begin, ensure you have met the following requirements:
-
-- Node.js and npm installed on your local machine.
-- Mongodb installed and running.
 
 ### Installation
 
