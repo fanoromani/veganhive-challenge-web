@@ -89,4 +89,4 @@ To start using the VeganHive Timeline Web, follow these steps:
 
 1.  Ensure the server is running as described in the installation section.
 
-2.  Make API requests to interact with the server's endpoints, as documented in the ![API Documentation](https://github.com/fanoromani/veganhive-timeline-server#readme).
+2.  Make API requests to interact with the server's endpoints, as documented in the [API Documentation](https://github.com/fanoromani/veganhive-timeline-server#readme).
