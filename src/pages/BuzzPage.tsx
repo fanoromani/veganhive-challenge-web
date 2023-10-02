@@ -28,7 +28,7 @@ export function BuzzPage() {
     setUser: state.setUser,
   }));
 
-  useQuery("user", getUser, {
+  const { data: user } = useQuery("user", getUser, {
     enabled: isLoggedIn,
     onSuccess: (data) => {
       setUser(data);
@@ -71,7 +71,11 @@ export function BuzzPage() {
             whoLiked={buzz.whoLiked}
           />
         )}
-        <WriteCommentCard buzzId={id} />
+        <WriteCommentCard
+          avatar={user.avatar}
+          username={user.username}
+          buzzId={id}
+        />
 
         {comments &&
           comments.map((comment) => (

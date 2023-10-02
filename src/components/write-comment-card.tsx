@@ -11,6 +11,8 @@ import { queryClient } from "@/lib/queryClient";
 
 interface WriteCommentCardProps {
   buzzId: string | undefined;
+  avatar: string | undefined;
+  username: string | undefined;
 }
 interface CommentBuzz {
   body: string;
@@ -27,7 +29,11 @@ interface NewCommentFormSchema {
   body: string;
 }
 
-export function WriteCommentCard({ buzzId }: WriteCommentCardProps) {
+export function WriteCommentCard({
+  buzzId,
+  avatar,
+  username,
+}: WriteCommentCardProps) {
   const {
     register,
     handleSubmit,
@@ -54,10 +60,16 @@ export function WriteCommentCard({ buzzId }: WriteCommentCardProps) {
         <CardContent className="flex items-center gap-2 p-6">
           <Avatar>
             <AvatarImage
-              src="https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
+              src={
+                avatar
+                  ? avatar
+                  : "https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
+              }
               alt="Vegan Bee"
             />
-            <AvatarFallback>VB</AvatarFallback>
+            <AvatarFallback>
+              {username?.slice(0, 1).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <Textarea
             placeholder="Write a comment..."

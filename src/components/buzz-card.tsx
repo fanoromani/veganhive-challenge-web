@@ -52,6 +52,7 @@ export function BuzzCard({
   const hasLiked = whoLiked.find(
     (usersWhoLiked) => usersWhoLiked.userId === user?.id
   );
+  console.log(whoLiked, "aqui", hasLiked, user?.id);
 
   return (
     <Card className="w-full rounded-none md:rounded-lg">

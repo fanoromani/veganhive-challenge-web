@@ -57,7 +57,9 @@ export function BuzzPageCard({
               src="https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg"
               alt="Vegan Bee"
             />
-            <AvatarFallback>VB</AvatarFallback>
+            <AvatarFallback>
+              {author?.username.slice(0, 1).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
             {author.username}
