@@ -58,10 +58,6 @@ You can see a live demo of VeganHive Timeline Web at [veganhive-timeline.netlify
 
 ## Getting Started
 
-### Prerequisites
-
-Configure the application by creating a .env file and setting the the "VITE_BACKEND_URL" as the Base Url
-
 ### Installation
 
 1. Clone this repository:
