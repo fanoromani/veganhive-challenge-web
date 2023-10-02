@@ -1,8 +1,30 @@
-# Zombie Survival Social Network - Web
+# VeganHive Timeline Web
+
+![VeganHive Logo](https://veganhive.com/f8523bec88396b62446c5ed9610169e7.svg)
+
+VeganHive Timeline Web is a web application that provides a timeline view of events and activities related to the VeganHive project. This project is designed to simulate a social timeline in which users can interact through making posts and like and commenting on each other's posts.
 
 This project was bootstrapped with [ViteJs](https://github.com/facebook/create-react-app).
 
 API repo: [https://github.com/fanoromani/veganhive-timeline-server](https://github.com/fanoromani/veganhive-timeline-server)
+
+## Table of Contents
+
+- [Demo](#demo)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+## Demo
+
+You can see a live demo of VeganHive Timeline Web at [veganhive-timeline.netlify.app](https://veganhive-timeline.netlify.app/).
 
 ## Tech Stack
 
@@ -21,20 +43,6 @@ API repo: [https://github.com/fanoromani/veganhive-timeline-server](https://gith
 - [ESlint](https://eslint.org/)
 - [Prettier](https://github.com/prettier/prettier)
 
-## Usage
-
-Install dependencies:
-
-```sh
- npm i
-```
-
-Done! Start the service:
-
-```sh
-npm run dev
-```
-
 ## Project Structure
 
 - `src/` code base;
@@ -42,11 +50,55 @@ npm run dev
 - `src/components` components isolated with their styling (if any)
 - `src/pages/` first level router components;
 
-## Commands
+## Features
 
-```sh
-# run the app
-npm run dev
-# build static assets
-npm run build
-```
+- **Event Management**: Easily create, like, and comment vegan posts.
+- **Timeline Generation**: Automatically generate a timeline of vegan-related posts made by users.
+- **User Authentication**: Secure user authentication system to manage user-specific data.
+- **RESTful API**: Provides a RESTful API for easy integration with the frontend or other applications.
+- **Database Storage**: Stores data efficiently in a database for quick retrieval.
+
+## Getting Started
+
+### Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- Node.js and npm installed on your local machine.
+- Mongodb installed and running.
+
+### Installation
+
+1. Clone this repository:
+
+   ```bash
+    git clone https://github.com/fanoromani/veganhive-timeline-web.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+       cd veganhive-timeline-web
+   ```
+
+3. Install dependencies:
+
+   ```bash
+        npm install
+   ```
+
+   Configure the application by creating a .env file and setting the required environment variables (e.g. API key).
+
+4. Run the server:
+
+   ```bash
+       npm run dev
+   ```
+
+### Usage
+
+To start using the VeganHive Timeline Web, follow these steps:
+
+1.  Ensure the server is running as described in the installation section.
+
+2.  Make API requests to interact with the server's endpoints, as documented in the ![API Documentation](https://github.com/fanoromani/veganhive-timeline-server#readme).
