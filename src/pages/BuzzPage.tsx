@@ -4,7 +4,7 @@ import { ArrowBigLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink, useParams } from "react-router-dom";
 import { api } from "@/lib/axios";
-import { Buzz, Comment } from "@/lib/types";
+import { Buzz, Comment, User } from "@/lib/types";
 import { CommentCard } from "@/components/comment-card";
 import { useQuery } from "react-query";
 import { useUserStore } from "@/lib/userStore";
@@ -28,7 +28,7 @@ export function BuzzPage() {
     setUser: state.setUser,
   }));
 
-  const { data: user } = useQuery("user", getUser, {
+  const { data: user } = useQuery<User>("user", getUser, {
     enabled: isLoggedIn,
     onSuccess: (data) => {
       setUser(data);

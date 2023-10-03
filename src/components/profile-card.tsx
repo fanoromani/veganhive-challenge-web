@@ -12,10 +12,10 @@ import { useUserStore } from "@/lib/userStore";
 import { toast } from "react-toastify";
 
 interface ProfileCardProps {
-  username: string | undefined;
-  avatar: string;
-  description: string;
-  buzzes: number;
+  username?: string | undefined;
+  avatar?: string;
+  description?: string;
+  buzzes?: number;
 }
 export function ProfileCard({
   username,

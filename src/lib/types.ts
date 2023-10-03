@@ -27,6 +27,9 @@ export interface Author {
 export interface User {
   username: string;
   id: string;
+  description?: string;
+  avatar?: string;
+  buzzes?: number;
 }
 
 export interface Token {

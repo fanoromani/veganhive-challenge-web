@@ -1,7 +1,7 @@
 import { BuzzCard } from "@/components/buzz-card";
 import { ProfileCard } from "@/components/profile-card";
 import { api } from "../lib/axios";
-import { Buzz } from "@/lib/types";
+import { Buzz, User } from "@/lib/types";
 import { LoginCard } from "@/components/login-card";
 import { useQuery } from "react-query";
 import { useUserStore } from "@/lib/userStore";
@@ -23,7 +23,7 @@ export function HomePage() {
     setUser: state.setUser,
   }));
 
-  const { data: user } = useQuery("user", getUser, {
+  const { data: user } = useQuery<User>("user", getUser, {
     enabled: isLoggedIn,
     onSuccess: (data) => {
       setUser(data);
