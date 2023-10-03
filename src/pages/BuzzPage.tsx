@@ -72,8 +72,8 @@ export function BuzzPage() {
           />
         )}
         <WriteCommentCard
-          avatar={user.avatar}
-          username={user.username}
+          avatar={user?.avatar}
+          username={user?.username}
           buzzId={id}
         />
 

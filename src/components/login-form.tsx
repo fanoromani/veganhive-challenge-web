@@ -60,12 +60,12 @@ export function LoginForm({ setFormType, setDialogOpen }: LoginFormProps) {
       <Label>Username</Label>
       <Input type="text" {...register("username", { required: true })} />
       {errors.username && errors.username.type === "required" && (
-        <p className="text-red-700">Required</p>
+        <p className="text-red-700">{errors.username.message}</p>
       )}
       <Label>Password</Label>
       <Input type="password" {...register("password", { required: true })} />
       {errors.password && errors.password.type === "required" && (
-        <p className="text-red-700">Required</p>
+        <p className="text-red-700">{errors.password.message}</p>
       )}
 
       <DialogFooter className="mt-2">

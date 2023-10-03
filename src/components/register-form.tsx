@@ -64,12 +64,12 @@ export function RegisterForm({
       <Label>Username</Label>
       <Input type="text" {...register("username", { required: true })} />
       {errors.username && errors.username.type === "required" && (
-        <p className="text-red-700">Required</p>
+        <p className="text-red-700">{errors.username.message}</p>
       )}
       <Label>Password</Label>
       <Input type="password" {...register("password", { required: true })} />
       {errors.password && errors.password.type === "required" && (
-        <p className="text-red-700">Required</p>
+        <p className="text-red-700">{errors.password.message}</p>
       )}
       <Label>Confirm password</Label>
       <Input
@@ -81,10 +81,10 @@ export function RegisterForm({
         })}
       />
       {errors.confirmPassword && errors.confirmPassword.type === "required" && (
-        <p className="text-red-700">Required</p>
+        <p className="text-red-700">{errors.confirmPassword.message}</p>
       )}
       {errors.confirmPassword && errors.confirmPassword.type === "validate" && (
-        <p className="text-red-700">Passwords don't match</p>
+        <p className="text-red-700">{errors.confirmPassword.message}</p>
       )}
 
       <DialogFooter className="mt-2">

@@ -34,7 +34,6 @@ export function BuzzPageCard({
   comments,
   whoLiked,
 }: Buzz) {
-  console.log(whoLiked);
   const user = useUserStore((state) => state.user);
 
   const hasLiked = whoLiked?.find(
