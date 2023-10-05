@@ -133,7 +133,7 @@ export function BuzzCard({
             </Button>
           </NavLink>
           <Button variant={"ghost"} className="p-1">
-            {shares} Shares
+            0 Shares
           </Button>
         </div>
       </CardFooter>
